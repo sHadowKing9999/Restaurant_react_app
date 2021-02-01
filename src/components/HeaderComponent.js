@@ -33,35 +33,35 @@ class Header extends Component{
             <React.Fragment>
                 <Navbar dark expand="md">
                     <div className="container">
-                        <NavbarToggler onClick={this.toggleNav} />
+                        <NavbarToggler className="ml-1" onClick={this.toggleNav} />
                         <NavbarBrand className="mr-auto" href="/">
                             <img src='assets/images/logo.png' alt="Ristorante Con Fusion" height="30" width="41"/>
                         </NavbarBrand>
                         <Collapse isOpen={this.state.isNavOn} navbar>
                             <Nav navbar>
-                                <NavItem>
+                                <NavItem className="ml-2">
                                     <NavLink className="nav-link" to="/home">
-                                        {' '}<span className="fa fa-home fa-lg"></span> Home
+                                        <span className="fa fa-home fa-lg"></span> Home
                                     </NavLink>
                                 </NavItem>
-                                <NavItem>
+                                <NavItem className="ml-2">
                                     <NavLink className="nav-link" to="/aboutus">
-                                        <span className="fa fa-info fa-lg"></span> About Us
+                                       <span className="fa fa-info fa-lg"></span> About Us
                                     </NavLink>
                                 </NavItem>
-                                <NavItem>
+                                <NavItem className="ml-2">
                                     <NavLink className="nav-link" to="/menu">
                                         <span className="fa fa-list fa-lg"></span> Menu
                                     </NavLink>
                                 </NavItem>
-                                <NavItem>
+                                <NavItem className="ml-2">
                                     <NavLink className="nav-link" to="/contactus">
                                         <span className="fa fa-address-card fa-lg"></span> Contact Us
                                     </NavLink>
                                 </NavItem>
                             </Nav>
                             <Nav navbar className="ml-auto">
-                                <NavItem>
+                                <NavItem className="ml-2">
                                     <Button onClick={this.toggleModal} outline><span className="fa fa-sign-in fa-lg"></span> Login</Button>
                                 </NavItem>
                             </Nav>

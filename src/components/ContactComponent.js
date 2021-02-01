@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import {Breadcrumb,BreadcrumbItem,Row,Label,Col,Button} from 'reactstrap';
-import {Control,Errors,LocalForm} from 'react-redux-form';
+import {Control,Errors,Form} from 'react-redux-form';
 import { Link } from 'react-router-dom';
 const required=(val)=>val&&val.length;
 const maxLength=(len)=>(val)=>!val||val.length<=len;
@@ -10,11 +10,27 @@ const validEmail=(val)=>/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 class Contact extends Component{
     constructor(props){
         super(props);
+        this.state={
+            show:false
+        }
         this.handleSubmit=this.handleSubmit.bind(this);
+        this.handleShow=this.handleShow.bind(this);
+    }
+    handleShow(values){
+        console.log(values.firstname);
+        if(values.firstname.length>0)
+        this.setState({
+            show:true
+        })
+        else
+        this.setState({
+            show:false
+        })
     }
     handleSubmit(values){
-        console.log("Current state is : "+JSON.stringify(values));
-        alert("Current state is : "+JSON.stringify(values));
+        this.props.postFeedback(values);
+        this.props.resetFeedbackForm();
+        
     }
     render()
     {   
@@ -64,7 +80,8 @@ class Contact extends Component{
                         <h3>Send us Feedback</h3><hr/>
                     </div>
                     <div className="col-12 col-md-9">
-                        <LocalForm onSubmit={(values)=>this.handleSubmit(values)}>
+                        <Form model="feedback" onSubmit={(values)=>this.handleSubmit(values)} 
+                              onChange={(values)=>this.handleShow(values)}  >
                             <Row className="form-group">
                                 <Label md={2} htmlFor="firstname">First Name</Label>
                                 <Col md={10}>
@@ -77,7 +94,7 @@ class Contact extends Component{
                                          required,maxLength:maxLength(15),minLength:minLength(3)
                                      }}
                                      />
-                                     <Errors className="text-danger" model=".firstname" show="touched"
+                                     <Errors className="text-danger" model=".firstname" show='touched'
                                      messages={{
                                          required:'Required   ',
                                          minLength:'Must be more than 2 characters   ',
@@ -150,10 +167,10 @@ class Contact extends Component{
                                     <div className="form-check">
                                         <Label check>
                                             <Control.checkbox model=".agree"
-                                            className="form-control"
+                                            className="form-check-input"
                                             id="agree" 
-                                            name="agree" />
-                                            {' '}<strong>May we Contact You?</strong>
+                                            name="agree" />{' '}
+                                            <strong>May we Contact You?</strong>
                                         </Label>
                                     </div>
                                 </Col>
@@ -176,10 +193,10 @@ class Contact extends Component{
                             </Row>
                             <Row className="form-group">
                                 <Col md={{size:10,offset:2}}>
-                                    <Button type="submit" color="primary">Send FeedBack!</Button>
+                                    <Button disabled={!this.state.show} type="submit" color="primary">Send FeedBack!</Button>
                                 </Col>
                             </Row>
-                        </LocalForm>
+                        </Form>
                     </div>
                 </div>
             </div>
